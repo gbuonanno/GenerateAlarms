@@ -5,7 +5,6 @@
 clear all;
 clc
 
-j=8;
 
 % Establish connection with MySQL database 
 vendor = "MySQL";
@@ -29,13 +28,27 @@ conn = database(datasource,username,password);
 conn.Message
 
 table_name = "test.alarms";
-%(Primary key was eliminated for testing )
-ID=2;
-Unique_ID=2;
-Date= "2022-10-03 11:15:01";
+% %(Primary key was eliminated for testing )
+% ID=2;
+% Unique_ID=2;
+% Date= "2022-10-03 11:15:01";
+% 
+% Data = table(ID,Unique_ID,Date,'VariableNames',{'ID','Unique_ID','Date'});
+% sqlwrite(conn,table_name,Data);
 
-Data = table(ID,Unique_ID,Date,'VariableNames',{'ID','Unique_ID','Date'});
-sqlwrite(conn,table_name,Data);
+Num_Datos= 35;
+
+for (i=1:Num_Datos)
+    
+    time=now;
+    Random_Number = randi([1,11]);
+    ID=i;
+    Unique_ID = Random_Number;
+    Date = datetime(time,'ConvertFrom','datenum'); 
+    Data = table(ID,Unique_ID,Date,'VariableNames',{'ID','Unique_ID','Date'});
+    sqlwrite(conn,table_name,Data);
+
+end
 
 
 
